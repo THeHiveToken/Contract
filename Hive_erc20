@@ -220,12 +220,12 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
     ) external;
 }
 
-contract ZenTwo is Context, IERC20, Ownable {
+contract HiveToken is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
 
-    string private _name = "ZenTwo";
-    string private _symbol = "ZEN2";
+    string private _name = "Hive Token";
+    string private _symbol = "HIVE";
     uint8 private _decimals = 18;
 
     address payable public marketingWalletAddress;
