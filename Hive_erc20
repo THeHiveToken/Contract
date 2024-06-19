@@ -288,7 +288,7 @@ contract HiveToken is Context, IERC20, Ownable {
     }
 
     constructor() {
-        marketingWalletAddress = payable(0x52290BFB3eDeC79FE229fdda2082Df75dEA6CBf3);
+        marketingWalletAddress = payable(0x6Fe500f3067d1d855A6B328F26946885f77B34c1);
         deadAddress = 0x000000000000000000000000000000000000dEaD;
 
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x389020A592e3da50506e1Efc04acFfdc17D8891e);
@@ -418,6 +418,12 @@ contract HiveToken is Context, IERC20, Ownable {
             _balances[sender] = _balances[sender].sub(amount, "Insufficient Balance");
 
             uint256 burnAmount = amount.mul(_burnTax).div(100);
+
+            // Exclude burn tax for wallet-to-wallet transfers
+            if (!isMarketPair[sender] && !isMarketPair[recipient]) {
+                burnAmount = 0;
+            }
+
             uint256 transferAmount = amount.sub(burnAmount);
             uint256 finalAmount = (isExcludedFromFee[sender] || isExcludedFromFee[recipient])
                 ? transferAmount
